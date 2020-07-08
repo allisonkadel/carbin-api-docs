@@ -2,13 +2,13 @@
 title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
-  - javascript
+  # - shell
+  # - ruby
+  # - python
+  # - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
+  # - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
 
 includes:
@@ -21,221 +21,160 @@ code_clipboard: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Carbon Insights Documentation. This is a guide for usage of the Carbon Insights API.
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+If you have questions or need support, please contact <support@carboninsights.co>.
 
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
+# Schema
+
+All API access is over HTTPS, and accessed from `https://api.carboninsights.org`. All data is sent and received as JSON.
 
 # Authentication
 
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
+<!-- > To authorize, use this code: -->
 
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+curl "https://api.carboninsights.org"
+  -H "Authorization: Token YOU_TOKEN"
 ```
 
-```javascript
-const kittn = require('kittn');
+CarbIN uses JSON Web Tokens to allow access to the API. If you are interested in applying for a token, please contact <tokens@carboninsights.co>.
 
-let api = kittn.authorize('meowmeowmeow');
-```
+CarbIN requires that the JWT is included in all API requests to the server in a header that looks like the following:
 
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
+`Authorization: Token YOUR_TOKEN`
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+You must replace <code>YOUR_TOKEN</code> with your personal JWT.
 </aside>
 
-# Kittens
+# Endpoints
 
-## Get All Kittens
+## Calculate a carbon score
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
+> Sample Request:
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+{
+	"user_profile": {
+		"diet": "vegetarian",
+		"VRE": false,
+		"natural_gas": false,
+		"shared_account": false, 
+        "zip_code": 19130
+	},
+	"options": {
+		"offsets": false,
+		"recommendations": true,
+		"CO2e": true,
+		"land": false,
+		"water": false
+	},
+	"transactions": [
+		{
+			"date": "2020-03-01",
+			"amount": 248.76,
+			"category": "Air Travel", 
+            "description": "Delta",
+            "original_description": "Delta 866-576-1039 GA"
+		},
+				{
+			"date": "2020-03-03",
+			"amount": 73.88,
+			"category": "Hotel", 
+            "description": "Hilton",
+            "original_description": "Hilton - WESTHEIM HOUSTON"
+		},
+				{
+			"date": "2020-03-03",
+			"amount": 11.23,
+			"category": "Rental Car & Taxi", 
+            "description": "Lyft",
+            "original_description": "LYFT *RIDE SUN 12AM 855-865-9553 CA"
+		}
+	]
+}
 ```
 
-This endpoint retrieves all kittens.
+> Sample Response:
 
-### HTTP Request
+```json
+{
+    "messages": [],
+    "details": {
+        "footprint": {
+            "category": {
+                "0": "Air Travel",
+                "1": "Hotel",
+                "2": "Rental Car & Taxi"
+            },
+            "CO2e Emissions [tonne]": {
+                "0": 0.22999763029727627,
+                "1": 0.02183167856093383,
+                "2": 0.04184753435490269
+            }
+        },
+        "recommendations": {
+            "category": {
+                "0": "One Less Flight",
+                "1": "Driving 10% less"
+            },
+            "CO2e Emissions [tonne]": {
+                "0": 0.22999763029727627,
+                "1": 0.004184753435490269
+            }
+        }
+    }
+}
+```
 
-`GET http://example.com/api/kittens`
+<!-- ### HTTP Request -->
 
-### Query Parameters
+`POST https://api.carboninsights.org/calculateCarbonScore`
+
+### Query Parameters for `transactions`
+**Required**
 
 Parameter | Default | Description
 --------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+`date` |  |  The transaction date
+`amount` |  | The transaction amount
+`category` |  | The transaction category
+`description` |  | The transaction description
+`original_description` |  | The original description of the transaction
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+### Query Parameters for `user_profile`
+_Optional_
+
+Parameter | Default | Description
+--------- | ------- | -----------
+`diet` | `"typical"` | The user's diet. Can be one of: <br>`"typical"`<br>`"vegetarian"`<br>`"vegan"`
+`VRE` |  `0` | The fraction of the user's eletricity that is green
+`natural_gas` |  `false` | Whether the user uses natural gas for heating and cooling
+`shared_account` |  `false` | Whether the user shares the account with at least one other person
+`zip_code` |  `00000` | The user's zip code
+`offsets`      | `false` | The parent key to include parameters relating to optional response data
+
+### Query Parameters for `options`
+_Optional_
+
+Parameter | Default | Description
+--------- | ------- | -----------
+`offsets`      | `false` |  Whether to return an offset referral link
+`recommendations`      | `false` | Whether to return user recommendedations
+`CO2e`      | `true` | Whether to return user CO2 footprint in response
+`land`      | `false` | Whether to return land use in response
+`water`      | `false` | Whether to return water use in response
+
+
+<aside class="notice">
+If you include the <code>user_profile</code> or <code>options</code> parent parameters, you are required to include all corresponding child parameters.
 </aside>
 
-## Get a Specific Kitten
+# Throttling
 
-```ruby
-require 'kittn'
+The Carbon Insights API currently specifies the following request rate limits for authenticated users:
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
-
+  * Per Second: `30`
+  * Per Minute: `400`
+  * Per Day: `1000`
