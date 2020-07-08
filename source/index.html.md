@@ -38,9 +38,9 @@ curl "https://api.carboninsights.org"
   -H "Authorization: Token YOU_TOKEN"
 ```
 
-CarbIN uses JSON Web Tokens to allow access to the API. If you are interested in applying for a token, please contact <tokens@carboninsights.co>.
+carbIN uses JSON Web Tokens to allow access to the API. If you are interested in applying for a token, please contact <support@carboninsights.co>.
 
-CarbIN requires that the JWT is included in all API requests to the server in a header that looks like the following:
+carbIN requires that the JWT is included in all API requests to the server in a header that looks like the following:
 
 `Authorization: Token YOUR_TOKEN`
 
@@ -138,7 +138,7 @@ You must replace <code>YOUR_TOKEN</code> with your personal JWT.
 Parameter | Default | Description
 --------- | ------- | -----------
 `date` |  |  The transaction date
-`amount` |  | The transaction amount
+`amount` |  | The transaction amount in USD
 `category` |  | The transaction category
 `description` |  | The transaction description
 `original_description` |  | The original description of the transaction
@@ -167,7 +167,7 @@ Parameter | Default | Description
 
 
 <aside class="notice">
-If you include the <code>user_profile</code> or <code>options</code> parent parameters, you are required to include all corresponding child parameters.
+If you include the <code>user_profile</code> or <code>options</code> parent parameters, you are required to include all corresponding child parameters. Providing the data in <code>user_profile</code> improves the accuracy of the environmental footprint calculation. If it is not included, typical values for a US resident will be assumed.
 </aside>
 
 # Throttling
@@ -176,4 +176,4 @@ The Carbon Insights API currently specifies the following request rate limits fo
 
   * Per Second: `30`
   * Per Minute: `400`
-  * Per Day: `1000`
+  * Per Day: `100000`
