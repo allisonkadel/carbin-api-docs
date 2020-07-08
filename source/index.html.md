@@ -153,7 +153,6 @@ Parameter | Default | Description
 `natural_gas` |  `false` | Whether the user uses natural gas for heating and cooling
 `shared_account` |  `false` | Whether the user shares the account with at least one other person
 `zip_code` |  `00000` | The user's zip code
-`offsets`      | `false` | The parent key to include parameters relating to optional response data
 
 ### Query Parameters for `options`
 _Optional_
