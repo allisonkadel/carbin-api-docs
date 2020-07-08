@@ -345,9 +345,9 @@
 <div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.carboninsights.org"</span>
   <span class="nt">-H</span> <span class="s2">"Authorization: Token YOU_TOKEN"</span>
 </code></pre></div>
-<p>CarbIN uses JSON Web Tokens to allow access to the API. If you are interested in applying for a token, please contact <a href="mailto:tokens@carboninsights.co">tokens@carboninsights.co</a>.</p>
+<p>carbIN uses JSON Web Tokens to allow access to the API. If you are interested in applying for a token, please contact <a href="mailto:support@carboninsights.co">support@carboninsights.co</a>.</p>
 
-<p>CarbIN requires that the JWT is included in all API requests to the server in a header that looks like the following:</p>
+<p>carbIN requires that the JWT is included in all API requests to the server in a header that looks like the following:</p>
 
 <p><code>Authorization: Token YOUR_TOKEN</code></p>
 
@@ -450,7 +450,7 @@ You must replace <code>YOUR_TOKEN</code> with your personal JWT.
 <tr>
 <td><code>amount</code></td>
 <td></td>
-<td>The transaction amount</td>
+<td>The transaction amount in USD</td>
 </tr>
 <tr>
 <td><code>category</code></td>
@@ -542,7 +542,7 @@ You must replace <code>YOUR_TOKEN</code> with your personal JWT.
 </tbody></table>
 
 <aside class="notice">
-If you include the <code>user_profile</code> or <code>options</code> parent parameters, you are required to include all corresponding child parameters.
+If you include the <code>user_profile</code> or <code>options</code> parent parameters, you are required to include all corresponding child parameters. Providing the data in <code>user_profile</code> improves the accuracy of the environmental footprint calculation. If it is not included, typical values for a US resident will be assumed.
 </aside>
 <h1 id='throttling'>Throttling</h1>
 <p>The Carbon Insights API currently specifies the following request rate limits for authenticated users:</p>
@@ -550,7 +550,7 @@ If you include the <code>user_profile</code> or <code>options</code> parent para
 <ul>
 <li>Per Second: <code>30</code></li>
 <li>Per Minute: <code>400</code></li>
-<li>Per Day: <code>1000</code></li>
+<li>Per Day: <code>100000</code></li>
 </ul>
 <h1 id='errors'>Errors</h1>
 <p>The Carbon Insights API uses the following error codes:</p>
