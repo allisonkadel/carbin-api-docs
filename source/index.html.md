@@ -23,7 +23,7 @@ code_clipboard: true
 
 Welcome to the Carbon Insights Documentation. This is a guide for usage of the Carbon Insights API.
 
-If you have questions or need support, please contact <support@carboninsights.co>.
+If you have questions or need support, please contact <tech@carboninsights.co>.
 
 # Schema
 
@@ -38,7 +38,7 @@ curl "https://api.carboninsights.org"
   -H "Authorization: Token YOU_TOKEN"
 ```
 
-carbIN uses JSON Web Tokens to allow access to the API. If you are interested in applying for a token, please contact <support@carboninsights.co>.
+carbIN uses JSON Web Tokens to allow access to the API. If you are interested in applying for a token, please contact <tech@carboninsights.co>.
 
 carbIN requires that the JWT is included in all API requests to the server in a header that looks like the following:
 
