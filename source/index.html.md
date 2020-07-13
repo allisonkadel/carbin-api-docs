@@ -27,14 +27,14 @@ If you have questions or need support, please contact <tech@carboninsights.co>.
 
 # Schema
 
-All API access is over HTTPS, and accessed from `https://api.carboninsights.org`. All data is sent and received as JSON.
+All API access is over HTTPS, and accessed from `https://api.carboninsights.co`. All data is sent and received as JSON.
 
 # Authentication
 
 <!-- > To authorize, use this code: -->
 
 ```shell
-curl "https://api.carboninsights.org"
+curl "https://api.carboninsights.co"
   -H "Authorization: Token YOU_TOKEN"
 ```
 
@@ -130,7 +130,7 @@ You must replace <code>YOUR_TOKEN</code> with your personal JWT.
 
 <!-- ### HTTP Request -->
 
-`POST https://api.carboninsights.org/calculateCarbonScore`
+`POST https://api.carboninsights.co/calculateCarbonScore`
 
 ### Query Parameters for `transactions`
 **Required**
