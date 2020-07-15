@@ -27,7 +27,7 @@ If you have questions or need support, please contact <tech@carboninsights.co>.
 
 # Schema
 
-All API access is over HTTPS, and accessed from `https://api.carboninsights.co`. All data is sent and received as JSON.
+All API access is over HTTPS, and accessed from `https://api.carboninsights.co`. All data is sent and received as JSON. You must include the `Content-Type: application/json` header when sending your requests.
 
 # Authentication
 
@@ -36,6 +36,7 @@ All API access is over HTTPS, and accessed from `https://api.carboninsights.co`.
 ```shell
 curl "https://api.carboninsights.co"
   -H "Authorization: Token YOU_TOKEN"
+  -H "Content-Type: application/json"
 ```
 
 carbIN uses JSON Web Tokens to allow access to the API. If you are interested in applying for a token, please contact <tech@carboninsights.co>.
@@ -48,6 +49,10 @@ carbIN requires that the JWT is included in all API requests to the server in a 
 You must replace <code>YOUR_TOKEN</code> with your personal JWT.
 </aside>
 
+# Request Ids
+
+Each API request has an associated request id. You can find this value in the `Request-Id` response header. Referencing the request id is helpful when you need to contact us for support regarding a specific request.
+
 # Endpoints
 
 ## Calculate a carbon score
@@ -58,7 +63,7 @@ You must replace <code>YOUR_TOKEN</code> with your personal JWT.
 {
 	"user_profile": {
 		"diet": "vegetarian",
-		"VRE": false,
+		"VRE": 0,
 		"natural_gas": false,
 		"shared_account": false, 
         "zip_code": 19130
@@ -135,13 +140,13 @@ You must replace <code>YOUR_TOKEN</code> with your personal JWT.
 ### Query Parameters for `transactions`
 **Required**
 
-Parameter | Default | Description
+Parameter | Type | Description
 --------- | ------- | -----------
-`date` |  |  The transaction date
-`amount` |  | The transaction amount in USD
-`category` |  | The transaction category
-`description` |  | The transaction description
-`original_description` |  | The original description of the transaction
+`date` | `date string` |  The transaction date. Format can be one of: <br>`YYYY-MM-DD`<br>`DD-MM-YYYY`
+`amount` | `decimal` | The transaction amount in USD
+`category` | `string` | The transaction category
+`description` | `string` | The transaction description
+`original_description` | `string` | _Optional_ The original description of the transaction
 
 ### Query Parameters for `user_profile`
 _Optional_
@@ -170,6 +175,24 @@ Parameter | Default | Description
 If you include the <code>user_profile</code> or <code>options</code> parent parameters, you are required to include all corresponding child parameters. Providing the data in <code>user_profile</code> improves the accuracy of the environmental footprint calculation. If it is not included, typical values for a US resident will be assumed.
 </aside>
 
+# Transaction Categories
+Below is an exhaustive list of the transaction categories we currently support for computing emissions
+## Recommended Categories
+      |        |           |     
+--------- | ------- | -----------
+`Auto Payment`<br>`Gas & Fuel`<br>`Parking`<br>`Public Transportation`<br>`Service & Parts`<br>`Home Phone`<br>`Internet`<br>`Mobile Phone`<br>`Television`<br>`Utilities`<br>`Advertising`<br>`Legal`<br>`Office Supplies`<br>`Printing`<br>`Shipping`<br>`Books & Supplies`<br>`Student Loan`<br>`Tuition`<br>`Amusement`<br>`Arts`<br>`Movies & DVDs`<br>`Music`<br>`Newspapers & Magazines`<br>`ATM Fee`<br>`Bank Fee`<br>`Finance Charge`<br>`Late Fee`<br>`Service Fee`<br>`Trade Commissions`<br>`Financial Advisor`<br> |`Life Insurance`<br>`Alcohol & Bars`<br>`Coffee Shops`<br>`Fast Food`<br>`Groceries`<br>`Restaurants`<br>`Charity`<br>`Gift`<br>`Dentist`<br>`Doctor`<br>`Eyecare`<br>`Gym`<br>`Health Insurance`<br>`Pharmacy`<br>`Sports`<br>`Furnishings`<br>`Home Improvement`<br>`Home Insurance`<br>`Home Services`<br>`Home Supplies`<br>`Lawn & Garden`<br>`Mortgage & Rent`<br>`Bonus`<br>`Interest Income`<br>`Paycheck`<br>`Reimbursement`<br>`Rental Income`<br>`Renturned Purchase`<br>`Investments`<br>`Allowance`<br> |`Baby Supplies`<br>`Babysitter & Daycare`<br>`Child Support`<br>`Kids Activities`<br>`Toys`<br>`Misc Expenses`<br>`Hair`<br>`Laundry`<br>`Spa & Massage`<br>`Pet Food & Supplies`<br>`Pet Grooming`<br>`Veterinary`<br>`Books`<br>`Clothing`<br>`Electronics & Software`<br>`Hobbies`<br>`Sporting Goods`<br>`Federal Tax`<br>`Local Tax`<br>`Property Tax`<br>`Sales Tax`<br>`State Tax`<br>`Credit Card Payment`<br>`Transfer for Cash Spending`<br>`Air Travel`<br>`Hotel`<br>`Rental Car & Taxi`<br>`Vacation`<br>`Cash & ATM`<br>`Check`
+
+## Additional Categories
+
+<aside class="notice">
+One of these categories can be used if the transaction does not fit into the above categories
+</aside>
+
+      |        |           |     
+--------- | ------- | -----------
+`Auto & Transport`<br>`Bills & Utilities`<br>`Business Services`<br>`Education`<br>`Entertainment`<br>`Fees & Charge`<br>`Financial` | `Food & Dining`<br>`Gifts & Donations`<br>`Health & Fitness`<br>`Home`<br>`Income`<br>`Investments`<br>`Kids`<br>`Misc Expenses` | `Personal Care`<br>`Pets`<br>`Shopping`<br>`Taxes`<br>`Transfer`<br>`Travel`<br>`Uncategorized`<br>
+
+
 # Throttling
 
 The Carbon Insights API currently specifies the following request rate limits for authenticated users:
@@ -177,3 +200,5 @@ The Carbon Insights API currently specifies the following request rate limits fo
   * Per Second: `30`
   * Per Minute: `400`
   * Per Day: `100000`
+
+
