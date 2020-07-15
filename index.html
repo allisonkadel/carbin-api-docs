@@ -313,10 +313,24 @@
             <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
           </li>
           <li>
+            <a href="#request-ids" class="toc-h1 toc-link" data-title="Request Ids">Request Ids</a>
+          </li>
+          <li>
             <a href="#endpoints" class="toc-h1 toc-link" data-title="Endpoints">Endpoints</a>
               <ul class="toc-list-h2">
                   <li>
                     <a href="#calculate-a-carbon-score" class="toc-h2 toc-link" data-title="Calculate a carbon score">Calculate a carbon score</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#transaction-categories" class="toc-h1 toc-link" data-title="Transaction Categories">Transaction Categories</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#recommended-categories" class="toc-h2 toc-link" data-title="Recommended Categories">Recommended Categories</a>
+                  </li>
+                  <li>
+                    <a href="#additional-categories" class="toc-h2 toc-link" data-title="Additional Categories">Additional Categories</a>
                   </li>
               </ul>
           </li>
@@ -339,11 +353,12 @@
 
 <p>If you have questions or need support, please contact <a href="mailto:tech@carboninsights.co">tech@carboninsights.co</a>.</p>
 <h1 id='schema'>Schema</h1>
-<p>All API access is over HTTPS, and accessed from <code>https://api.carboninsights.co</code>. All data is sent and received as JSON.</p>
+<p>All API access is over HTTPS, and accessed from <code>https://api.carboninsights.co</code>. All data is sent and received as JSON. You must include the <code>Content-Type: application/json</code> header when sending your requests.</p>
 <h1 id='authentication'>Authentication</h1>
 <!-- > To authorize, use this code: -->
 <div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.carboninsights.co"</span>
   <span class="nt">-H</span> <span class="s2">"Authorization: Token YOU_TOKEN"</span>
+  <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 </code></pre></div>
 <p>carbIN uses JSON Web Tokens to allow access to the API. If you are interested in applying for a token, please contact <a href="mailto:tech@carboninsights.co">tech@carboninsights.co</a>.</p>
 
@@ -354,6 +369,8 @@
 <aside class="notice">
 You must replace <code>YOUR_TOKEN</code> with your personal JWT.
 </aside>
+<h1 id='request-ids'>Request Ids</h1>
+<p>Each API request has an associated request id. You can find this value in the <code>Request-Id</code> response header. Referencing the request id is helpful when you need to contact us for support regarding a specific request.</p>
 <h1 id='endpoints'>Endpoints</h1><h2 id='calculate-a-carbon-score'>Calculate a carbon score</h2>
 <blockquote>
 <p>Sample Request:</p>
@@ -361,7 +378,7 @@ You must replace <code>YOUR_TOKEN</code> with your personal JWT.
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"user_profile"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"diet"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vegetarian"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"VRE"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"VRE"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
         </span><span class="nl">"natural_gas"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
         </span><span class="nl">"shared_account"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> 
         </span><span class="nl">"zip_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">19130</span><span class="w">
@@ -438,34 +455,34 @@ You must replace <code>YOUR_TOKEN</code> with your personal JWT.
 <table><thead>
 <tr>
 <th>Parameter</th>
-<th>Default</th>
+<th>Type</th>
 <th>Description</th>
 </tr>
 </thead><tbody>
 <tr>
 <td><code>date</code></td>
-<td></td>
-<td>The transaction date</td>
+<td><code>date string</code></td>
+<td>The transaction date. Format can be one of: <br><code>YYYY-MM-DD</code><br><code>DD-MM-YYYY</code></td>
 </tr>
 <tr>
 <td><code>amount</code></td>
-<td></td>
+<td><code>decimal</code></td>
 <td>The transaction amount in USD</td>
 </tr>
 <tr>
 <td><code>category</code></td>
-<td></td>
+<td><code>string</code></td>
 <td>The transaction category</td>
 </tr>
 <tr>
 <td><code>description</code></td>
-<td></td>
+<td><code>string</code></td>
 <td>The transaction description</td>
 </tr>
 <tr>
 <td><code>original_description</code></td>
-<td></td>
-<td>The original description of the transaction</td>
+<td><code>string</code></td>
+<td><em>Optional</em> The original description of the transaction</td>
 </tr>
 </tbody></table>
 <h3 id='query-parameters-for-user_profile'>Query Parameters for <code>user_profile</code></h3>
@@ -544,6 +561,40 @@ You must replace <code>YOUR_TOKEN</code> with your personal JWT.
 <aside class="notice">
 If you include the <code>user_profile</code> or <code>options</code> parent parameters, you are required to include all corresponding child parameters. Providing the data in <code>user_profile</code> improves the accuracy of the environmental footprint calculation. If it is not included, typical values for a US resident will be assumed.
 </aside>
+<h1 id='transaction-categories'>Transaction Categories</h1>
+<p>Below is an exhaustive list of the transaction categories we currently support for computing emissions</p>
+<h2 id='recommended-categories'>Recommended Categories</h2>
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>Auto Payment</code><br><code>Gas &amp; Fuel</code><br><code>Parking</code><br><code>Public Transportation</code><br><code>Service &amp; Parts</code><br><code>Home Phone</code><br><code>Internet</code><br><code>Mobile Phone</code><br><code>Television</code><br><code>Utilities</code><br><code>Advertising</code><br><code>Legal</code><br><code>Office Supplies</code><br><code>Printing</code><br><code>Shipping</code><br><code>Books &amp; Supplies</code><br><code>Student Loan</code><br><code>Tuition</code><br><code>Amusement</code><br><code>Arts</code><br><code>Movies &amp; DVDs</code><br><code>Music</code><br><code>Newspapers &amp; Magazines</code><br><code>ATM Fee</code><br><code>Bank Fee</code><br><code>Finance Charge</code><br><code>Late Fee</code><br><code>Service Fee</code><br><code>Trade Commissions</code><br><code>Financial Advisor</code><br></td>
+<td><code>Life Insurance</code><br><code>Alcohol &amp; Bars</code><br><code>Coffee Shops</code><br><code>Fast Food</code><br><code>Groceries</code><br><code>Restaurants</code><br><code>Charity</code><br><code>Gift</code><br><code>Dentist</code><br><code>Doctor</code><br><code>Eyecare</code><br><code>Gym</code><br><code>Health Insurance</code><br><code>Pharmacy</code><br><code>Sports</code><br><code>Furnishings</code><br><code>Home Improvement</code><br><code>Home Insurance</code><br><code>Home Services</code><br><code>Home Supplies</code><br><code>Lawn &amp; Garden</code><br><code>Mortgage &amp; Rent</code><br><code>Bonus</code><br><code>Interest Income</code><br><code>Paycheck</code><br><code>Reimbursement</code><br><code>Rental Income</code><br><code>Renturned Purchase</code><br><code>Investments</code><br><code>Allowance</code><br></td>
+<td><code>Baby Supplies</code><br><code>Babysitter &amp; Daycare</code><br><code>Child Support</code><br><code>Kids Activities</code><br><code>Toys</code><br><code>Misc Expenses</code><br><code>Hair</code><br><code>Laundry</code><br><code>Spa &amp; Massage</code><br><code>Pet Food &amp; Supplies</code><br><code>Pet Grooming</code><br><code>Veterinary</code><br><code>Books</code><br><code>Clothing</code><br><code>Electronics &amp; Software</code><br><code>Hobbies</code><br><code>Sporting Goods</code><br><code>Federal Tax</code><br><code>Local Tax</code><br><code>Property Tax</code><br><code>Sales Tax</code><br><code>State Tax</code><br><code>Credit Card Payment</code><br><code>Transfer for Cash Spending</code><br><code>Air Travel</code><br><code>Hotel</code><br><code>Rental Car &amp; Taxi</code><br><code>Vacation</code><br><code>Cash &amp; ATM</code><br><code>Check</code></td>
+</tr>
+</tbody></table>
+<h2 id='additional-categories'>Additional Categories</h2>
+<aside class="notice">
+One of these categories can be used if the transaction does not fit into the above categories
+</aside>
+
+<table><thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>Auto &amp; Transport</code><br><code>Bills &amp; Utilities</code><br><code>Business Services</code><br><code>Education</code><br><code>Entertainment</code><br><code>Fees &amp; Charge</code><br><code>Financial</code></td>
+<td><code>Food &amp; Dining</code><br><code>Gifts &amp; Donations</code><br><code>Health &amp; Fitness</code><br><code>Home</code><br><code>Income</code><br><code>Investments</code><br><code>Kids</code><br><code>Misc Expenses</code></td>
+<td><code>Personal Care</code><br><code>Pets</code><br><code>Shopping</code><br><code>Taxes</code><br><code>Transfer</code><br><code>Travel</code><br><code>Uncategorized</code><br></td>
+</tr>
+</tbody></table>
 <h1 id='throttling'>Throttling</h1>
 <p>The Carbon Insights API currently specifies the following request rate limits for authenticated users:</p>
 
