@@ -143,7 +143,7 @@ Each API request has an associated request id. You can find this value in the `R
 Parameter | Type | Description
 --------- | ------- | -----------
 `date` | `date string` |  The transaction date. Format can be one of: <br>`YYYY-MM-DD`<br>`DD-MM-YYYY`
-`amount` | `decimal` | The transaction amount in USD
+`amount` | `decimal` | The transaction amount in USD <br> _Note: negative amounts are treated as refunds and have negative emissions associated with them_
 `category` | `string` | The transaction category
 `description` | `string` | The transaction description
 `original_description` | `string` | _Optional_ The original description of the transaction
