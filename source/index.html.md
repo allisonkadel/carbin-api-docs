@@ -29,31 +29,129 @@ If you have questions or need support, please contact <tech@carboninsights.co>.
 
 All API access is over HTTPS, and accessed from `https://api.carboninsights.co`. All data is sent and received as JSON. You must include the `Content-Type: application/json` header when sending your requests.
 
-# Authentication
+# Registration & Authentication
 
 <!-- > To authorize, use this code: -->
 
 ```shell
 curl "https://api.carboninsights.co"
-  -H "Authorization: Token YOU_TOKEN"
+  -H "Authorization: Token YOU_ACCESS_TOKEN"
   -H "Content-Type: application/json"
 ```
 
-carbIN uses JSON Web Tokens to allow access to the API. If you are interested in applying for a token, please contact <tech@carboninsights.co>.
+carbIN uses JSON Web Tokens to control access to the API. In order to send and receive data, you must first [register for an account].
 
-carbIN requires that the JWT is included in all API requests to the server in a header that looks like the following:
+After successfully registering, you can [request your authorization tokens]. You will receive two tokens. Save these, but don't get too attached to them. They expire quickly for security purposes.
 
-`Authorization: Token YOUR_TOKEN`
+Your access token is a short-lived token that is sent in the header of every request:
+
+`Authorization: Token YOUR_ACCESS_TOKEN`
 
 <aside class="notice">
-You must replace <code>YOUR_TOKEN</code> with your personal JWT.
+You must replace <code>YOUR_ACCESS_TOKEN</code> with your personal access JWT you received upon registering for an account.
 </aside>
+
+Your refresh token is a longer-lived token that is used to [request a new access token] when your access token expires.
+
+When your refresh token expires, you will use your account credentials to [request a new set of tokens].
 
 # Request Ids
 
 Each API request has an associated request id. You can find this value in the `Request-Id` response header. Referencing the request id is helpful when you need to contact us for support regarding a specific request.
 
 # Endpoints
+
+## Register for an account
+
+> Sample Request:
+
+```json
+{
+    "username": "ilovetheplanet",
+    "password": "Sav3Th3Whal3s",
+    "first_name": "jeff",
+    "last_name": "whalen",
+    "email": "jwhalen@bluebank.com"
+}
+```
+
+> Sample Response:
+
+```json
+{
+    "message": "Account with username ilovetheplanet created successfully. Use credentials to generate authorization token."
+}
+```
+
+`POST https://api.carboninsights.co/register`
+
+### Query Parameters
+**Required**
+
+Parameter | Type | Description
+--------- | ------- | -----------
+`username` | `string` |  The account username. Must be < 50 characters.
+`password` | `string` | The account password. Must be distinct from username and > 7 characters.
+`first_name` | `string` | The account holder first name. Must be < 50 characters.
+`last_name` | `string` | The account holder last name. Must be < 50 characters.
+`email` | `string` | The account email. Must be a valid email format.
+
+## Request authorization tokens
+
+> Sample Request:
+
+```json
+{
+    "username": "ilovetheplanet",
+    "password": "Sav3Th3Whal3s"
+}
+```
+
+> Sample Response:
+
+```json
+{
+    "access": <YOUR_ACCESS_TOKEN>,
+    "refresh": <YOUR_REFRESH_TOKEN>
+}
+```
+
+`POST https://api.carboninsights.co/token`
+
+### Query Parameters
+**Required**
+
+Parameter | Type | Description
+--------- | ------- | -----------
+`username` | `string` |  The account username. Must match registered account username.
+`password` | `string` | The account password. Must match registered account password.
+
+## Request new access token
+
+> Sample Request:
+
+```json
+{
+    "refresh": <YOUR_REFRESH_TOKEN>
+}
+```
+
+> Sample Response:
+
+```json
+{
+    "access": <YOUR_NEW_ACCESS_TOKEN>
+}
+```
+
+`POST https://api.carboninsights.co/token/refresh`
+
+### Query Parameters
+**Required**
+
+Parameter | Type | Description
+--------- | ------- | -----------
+`refresh` | `string` |  Your refresh token received when initially requesting your authorization tokens.
 
 ## Calculate a carbon score
 
