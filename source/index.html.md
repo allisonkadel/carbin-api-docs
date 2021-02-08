@@ -35,15 +35,15 @@ All API access is over HTTPS, and accessed from `https://api.carboninsights.co`.
 
 ```shell
 curl "https://api.carboninsights.co"
-  -H "Authorization: Token YOU_ACCESS_TOKEN"
+  -H "Authorization: Token YOUR_ACCESS_TOKEN"
   -H "Content-Type: application/json"
 ```
 
-carbIN uses JSON Web Tokens to control access to the API. In order to send and receive data, you must first [register for an account].
+carbIN uses `JSON Web Tokens` to control access to the API. In order to send and receive data, you must first [register for an account](#register-for-an-account).
 
-After successfully registering, you can [request your authorization tokens]. You will receive two tokens. Save these, but don't get too attached to them. They expire quickly for security purposes.
+After successfully registering, you can [request your authorization tokens](#request-authorization-tokens). You will receive two tokens. Save these, but don't get too attached to them. They expire quickly for security purposes.
 
-Your access token is a short-lived token that is sent in the header of every request:
+Your `access token` is a short-lived token that is sent in the header of every request:
 
 `Authorization: Token YOUR_ACCESS_TOKEN`
 
@@ -51,9 +51,9 @@ Your access token is a short-lived token that is sent in the header of every req
 You must replace <code>YOUR_ACCESS_TOKEN</code> with your personal access JWT you received upon registering for an account.
 </aside>
 
-Your refresh token is a longer-lived token that is used to [request a new access token] when your access token expires.
+Your `refresh token` is a longer-lived token that is used to [request a new access token]#(request-a-new-access-token) when your access token expires.
 
-When your refresh token expires, you will use your account credentials to [request a new set of tokens].
+When your refresh token expires, you will use your account credentials to reauthenticate and [request a new set of tokens](#request-authorization-tokens).
 
 # Request Ids
 
