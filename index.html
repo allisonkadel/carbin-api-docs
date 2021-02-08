@@ -249,8 +249,11 @@
 .highlight .kd {
   color: #cb4b16;
 }
-.highlight .s, .highlight .sa, .highlight .sb, .highlight .sc, .highlight .dl, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
+.highlight .s, .highlight .sb, .highlight .sc, .highlight .dl, .highlight .sd, .highlight .s2, .highlight .sh, .highlight .sx, .highlight .s1 {
   color: #859900;
+}
+.highlight .sa {
+  color: #6c71c4;
 }
 .highlight .sr {
   color: #2aa198;
@@ -280,7 +283,7 @@
   color: #859900;
 }
     </style>
-    <link href="stylesheets/screen-e2081135.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/screen-9c291bc9.css" rel="stylesheet" media="screen" />
     <link href="stylesheets/print-953e3353.css" rel="stylesheet" media="print" />
       <script src="javascripts/all-e9bde216.js"></script>
 
@@ -310,7 +313,7 @@
             <a href="#schema" class="toc-h1 toc-link" data-title="Schema">Schema</a>
           </li>
           <li>
-            <a href="#authentication" class="toc-h1 toc-link" data-title="Authentication">Authentication</a>
+            <a href="#registration-amp-authentication" class="toc-h1 toc-link" data-title="Registration &amp; Authentication">Registration &amp; Authentication</a>
           </li>
           <li>
             <a href="#request-ids" class="toc-h1 toc-link" data-title="Request Ids">Request Ids</a>
@@ -318,6 +321,15 @@
           <li>
             <a href="#endpoints" class="toc-h1 toc-link" data-title="Endpoints">Endpoints</a>
               <ul class="toc-list-h2">
+                  <li>
+                    <a href="#register-for-an-account" class="toc-h2 toc-link" data-title="Register for an account">Register for an account</a>
+                  </li>
+                  <li>
+                    <a href="#request-authorization-tokens" class="toc-h2 toc-link" data-title="Request authorization tokens">Request authorization tokens</a>
+                  </li>
+                  <li>
+                    <a href="#request-new-access-token" class="toc-h2 toc-link" data-title="Request new access token">Request new access token</a>
+                  </li>
                   <li>
                     <a href="#calculate-a-carbon-score" class="toc-h2 toc-link" data-title="Calculate a carbon score">Calculate a carbon score</a>
                   </li>
@@ -354,24 +366,157 @@
 <p>If you have questions or need support, please contact <a href="mailto:tech@carboninsights.co">tech@carboninsights.co</a>.</p>
 <h1 id='schema'>Schema</h1>
 <p>All API access is over HTTPS, and accessed from <code>https://api.carboninsights.co</code>. All data is sent and received as JSON. You must include the <code>Content-Type: application/json</code> header when sending your requests.</p>
-<h1 id='authentication'>Authentication</h1>
+<h1 id='registration-amp-authentication'>Registration &amp; Authentication</h1>
 <!-- > To authorize, use this code: -->
 <div class="highlight"><pre class="highlight shell tab-shell"><code>curl <span class="s2">"https://api.carboninsights.co"</span>
-  <span class="nt">-H</span> <span class="s2">"Authorization: Token YOU_TOKEN"</span>
+  <span class="nt">-H</span> <span class="s2">"Authorization: Token YOUR_ACCESS_TOKEN"</span>
   <span class="nt">-H</span> <span class="s2">"Content-Type: application/json"</span>
 </code></pre></div>
-<p>carbIN uses JSON Web Tokens to allow access to the API. If you are interested in applying for a token, please contact <a href="mailto:tech@carboninsights.co">tech@carboninsights.co</a>.</p>
+<p>carbIN uses <code>JSON Web Tokens</code> to control access to the API. In order to send and receive data, you must first <a href="#register-for-an-account">register for an account</a>.</p>
 
-<p>carbIN requires that the JWT is included in all API requests to the server in a header that looks like the following:</p>
+<p>After successfully registering, you can <a href="#request-authorization-tokens">request your authorization tokens</a>. You will receive two tokens. Save these, but don&#39;t get too attached to them. They expire quickly for security purposes.</p>
 
-<p><code>Authorization: Token YOUR_TOKEN</code></p>
+<p>Your <code>access token</code> is a short-lived token that is sent in the header of every request:</p>
+
+<p><code>Authorization: Token YOUR_ACCESS_TOKEN</code></p>
 
 <aside class="notice">
-You must replace <code>YOUR_TOKEN</code> with your personal JWT.
+You must replace <code>YOUR_ACCESS_TOKEN</code> with your personal access JWT you received upon registering for an account.
 </aside>
+
+<p>Your <code>refresh token</code> is a longer-lived token that is used to [request a new access token]#(request-a-new-access-token) when your access token expires.</p>
+
+<p>When your refresh token expires, you will use your account credentials to reauthenticate and <a href="#request-authorization-tokens">request a new set of tokens</a>.</p>
 <h1 id='request-ids'>Request Ids</h1>
 <p>Each API request has an associated request id. You can find this value in the <code>Request-Id</code> response header. Referencing the request id is helpful when you need to contact us for support regarding a specific request.</p>
-<h1 id='endpoints'>Endpoints</h1><h2 id='calculate-a-carbon-score'>Calculate a carbon score</h2>
+<h1 id='endpoints'>Endpoints</h1><h2 id='register-for-an-account'>Register for an account</h2>
+<blockquote>
+<p>Sample Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ilovetheplanet"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sav3Th3Whal3s"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jeff"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"whalen"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"jwhalen@bluebank.com"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Sample Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Account with username ilovetheplanet created successfully. Use credentials to generate authorization token."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><code>POST https://api.carboninsights.co/register</code></p>
+<h3 id='query-parameters'>Query Parameters</h3>
+<p><strong>Required</strong></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>username</code></td>
+<td><code>string</code></td>
+<td>The account username. Must be &lt; 50 characters.</td>
+</tr>
+<tr>
+<td><code>password</code></td>
+<td><code>string</code></td>
+<td>The account password. Must be distinct from username and &gt; 7 characters.</td>
+</tr>
+<tr>
+<td><code>first_name</code></td>
+<td><code>string</code></td>
+<td>The account holder first name. Must be &lt; 50 characters.</td>
+</tr>
+<tr>
+<td><code>last_name</code></td>
+<td><code>string</code></td>
+<td>The account holder last name. Must be &lt; 50 characters.</td>
+</tr>
+<tr>
+<td><code>email</code></td>
+<td><code>string</code></td>
+<td>The account email. Must be a valid email format.</td>
+</tr>
+</tbody></table>
+<h2 id='request-authorization-tokens'>Request authorization tokens</h2>
+<blockquote>
+<p>Sample Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ilovetheplanet"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sav3Th3Whal3s"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Sample Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"access"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;YOUR_ACCESS_TOKEN&gt;</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"refresh"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;YOUR_REFRESH_TOKEN&gt;</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><code>POST https://api.carboninsights.co/token</code></p>
+<h3 id='query-parameters-2'>Query Parameters</h3>
+<p><strong>Required</strong></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>username</code></td>
+<td><code>string</code></td>
+<td>The account username. Must match registered account username.</td>
+</tr>
+<tr>
+<td><code>password</code></td>
+<td><code>string</code></td>
+<td>The account password. Must match registered account password.</td>
+</tr>
+</tbody></table>
+<h2 id='request-new-access-token'>Request new access token</h2>
+<blockquote>
+<p>Sample Request:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"refresh"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;YOUR_REFRESH_TOKEN&gt;</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>Sample Response:</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"access"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;YOUR_NEW_ACCESS_TOKEN&gt;</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><code>POST https://api.carboninsights.co/token/refresh</code></p>
+<h3 id='query-parameters-3'>Query Parameters</h3>
+<p><strong>Required</strong></p>
+
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>refresh</code></td>
+<td><code>string</code></td>
+<td>Your refresh token received when initially requesting your authorization tokens.</td>
+</tr>
+</tbody></table>
+<h2 id='calculate-a-carbon-score'>Calculate a carbon score</h2>
 <blockquote>
 <p>Sample Request:</p>
 </blockquote>
