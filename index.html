@@ -533,7 +533,9 @@ You must replace <code>YOUR_ACCESS_TOKEN</code> with your personal access JWT yo
         </span><span class="nl">"recommendations"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
         </span><span class="nl">"CO2e"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
         </span><span class="nl">"land"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"water"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+        </span><span class="nl">"water"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"category_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"category"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"United States"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nl">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
@@ -630,6 +632,10 @@ You must replace <code>YOUR_ACCESS_TOKEN</code> with your personal access JWT yo
 <td><em>Optional</em> The original description of the transaction</td>
 </tr>
 </tbody></table>
+
+<aside class="notice">
+Negative purchases (refunds) will return negative numbers for environmental impacts.
+</aside>
 <h3 id='query-parameters-for-user_profile'>Query Parameters for <code>user_profile</code></h3>
 <p><em>Optional</em></p>
 
@@ -653,7 +659,7 @@ You must replace <code>YOUR_ACCESS_TOKEN</code> with your personal access JWT yo
 <tr>
 <td><code>natural_gas</code></td>
 <td><code>false</code></td>
-<td>Whether the user uses natural gas for heating and cooling</td>
+<td>Whether the user uses natural gas for heating and cooking</td>
 </tr>
 <tr>
 <td><code>shared_account</code></td>
@@ -700,6 +706,16 @@ You must replace <code>YOUR_ACCESS_TOKEN</code> with your personal access JWT yo
 <td><code>water</code></td>
 <td><code>false</code></td>
 <td>Whether to return water use in response</td>
+</tr>
+<tr>
+<td><code>category_type</code></td>
+<td><code>&quot;category&quot;</code></td>
+<td>Whether to use a category or mcc code to categorize the transaction. Can be one of: <br><code>&quot;category&quot;</code><br><code>&quot;mcc&quot;</code></td>
+</tr>
+<tr>
+<td><code>country</code></td>
+<td><code>&quot;United States&quot;</code></td>
+<td>Country used to determine economic and environmental data. Usually set to user&#39;s permanent residence.</td>
 </tr>
 </tbody></table>
 
