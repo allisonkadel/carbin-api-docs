@@ -171,7 +171,9 @@ Parameter | Type | Description
 		"recommendations": true,
 		"CO2e": true,
 		"land": false,
-		"water": false
+		"water": false,
+        "category_type": "category",
+        "country": "United States"
 	},
 	"transactions": [
 		{
@@ -246,6 +248,10 @@ Parameter | Type | Description
 `description` | `string` | The transaction description
 `original_description` | `string` | _Optional_ The original description of the transaction
 
+<aside class="notice">
+Negative purchases (refunds) will return negative numbers for environmental impacts.
+</aside>
+
 ### Query Parameters for `user_profile`
 _Optional_
 
@@ -253,7 +259,7 @@ Parameter | Default | Description
 --------- | ------- | -----------
 `diet` | `"typical"` | The user's diet. Can be one of: <br>`"typical"`<br>`"vegetarian"`<br>`"vegan"`
 `VRE` |  `0` | The fraction of the user's eletricity that is green
-`natural_gas` |  `false` | Whether the user uses natural gas for heating and cooling
+`natural_gas` |  `false` | Whether the user uses natural gas for heating and cooking
 `shared_account` |  `false` | Whether the user shares the account with at least one other person
 `zip_code` |  `00000` | The user's zip code
 
@@ -267,6 +273,8 @@ Parameter | Default | Description
 `CO2e`      | `true` | Whether to return user CO2 footprint in response
 `land`      | `false` | Whether to return land use in response
 `water`      | `false` | Whether to return water use in response
+`category_type` | `"category"` | Whether to use a category or mcc code to categorize the transaction. Can be one of: <br>`"category"`<br>`"mcc"`
+`country` | `"United States"` | Country used to determine economic and environmental data. Usually set to user's permanent residence.
 
 
 <aside class="notice">
