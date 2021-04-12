@@ -161,7 +161,7 @@ Parameter | Type | Description
 {
 	"user_profile": {
 		"diet": "vegetarian",
-		"VRE": 0,
+		"renewable_energy": 0,
 		"natural_gas": false,
 		"shared_account": false, 
         "zip_code": 19130
@@ -173,7 +173,8 @@ Parameter | Type | Description
 		"land": false,
 		"water": false,
         "category_type": "category",
-        "country": "United States"
+        "country": "United States", 
+		"aggregate": true
 	},
 	"transactions": [
 		{
@@ -244,8 +245,8 @@ Parameter | Type | Description
 --------- | ------- | -----------
 `date` | `date string` |  The transaction date. Format can be one of: <br>`YYYY-MM-DD`<br>`DD-MM-YYYY`
 `amount` | `decimal` | The transaction amount in USD <br> _Note: negative amounts are treated as refunds and have negative emissions associated with them_
-`category` | `string` | The transaction category
-`description` | `string` | The transaction description
+`category` | `string` | The transaction category (category or Merchant Category Code (MCC))
+`description` | `string` | _Optional_ The transaction description
 `original_description` | `string` | _Optional_ The original description of the transaction
 
 <aside class="notice">
@@ -258,7 +259,7 @@ _Optional_
 Parameter | Default | Description
 --------- | ------- | -----------
 `diet` | `"typical"` | The user's diet. Can be one of: <br>`"typical"`<br>`"vegetarian"`<br>`"vegan"`
-`VRE` |  `0` | The fraction of the user's eletricity that is green
+`renewable_energy` |  `0` | The fraction of the user's eletricity that is renewable
 `natural_gas` |  `false` | Whether the user uses natural gas for heating and cooking
 `shared_account` |  `false` | Whether the user shares the account with at least one other person
 `zip_code` |  `00000` | The user's zip code
@@ -270,11 +271,12 @@ Parameter | Default | Description
 --------- | ------- | -----------
 `offsets`      | `false` |  Whether to return an offset referral link
 `recommendations`      | `false` | Whether to return user recommendedations
-`CO2e`      | `true` | Whether to return user CO2 footprint in response
+`CO2e`      | `true` | Whether to return CO2e emissions in response
 `land`      | `false` | Whether to return land use in response
 `water`      | `false` | Whether to return water use in response
-`category_type` | `"category"` | Whether to use a category or mcc code to categorize the transaction. Can be one of: <br>`"category"`<br>`"mcc"`
+`category_type` | `"category"` | Whether to use a category or Merchant Category Code (MCC) to categorize the transaction. Can be one of: <br>`"category"`<br>`"mcc"`
 `country` | `"United States"` | Country used to determine economic and environmental data. Usually set to user's permanent residence.
+`aggregate` | `false` | Whether to return an aggregated (by category or Merchant Category Code (MCC)) footprint or by footprints by transaction.
 
 
 <aside class="notice">
