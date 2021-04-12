@@ -523,7 +523,7 @@ You must replace <code>YOUR_ACCESS_TOKEN</code> with your personal access JWT yo
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="nl">"user_profile"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="nl">"diet"</span><span class="p">:</span><span class="w"> </span><span class="s2">"vegetarian"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"VRE"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"renewable_energy"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
         </span><span class="nl">"natural_gas"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
         </span><span class="nl">"shared_account"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> 
         </span><span class="nl">"zip_code"</span><span class="p">:</span><span class="w"> </span><span class="mi">19130</span><span class="w">
@@ -535,7 +535,8 @@ You must replace <code>YOUR_ACCESS_TOKEN</code> with your personal access JWT yo
         </span><span class="nl">"land"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
         </span><span class="nl">"water"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
         </span><span class="nl">"category_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"category"</span><span class="p">,</span><span class="w">
-        </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"United States"</span><span class="w">
+        </span><span class="nl">"country"</span><span class="p">:</span><span class="w"> </span><span class="s2">"United States"</span><span class="p">,</span><span class="w"> 
+        </span><span class="nl">"aggregate"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="nl">"transactions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
@@ -619,12 +620,12 @@ You must replace <code>YOUR_ACCESS_TOKEN</code> with your personal access JWT yo
 <tr>
 <td><code>category</code></td>
 <td><code>string</code></td>
-<td>The transaction category</td>
+<td>The transaction category (category or Merchant Category Code (MCC))</td>
 </tr>
 <tr>
 <td><code>description</code></td>
 <td><code>string</code></td>
-<td>The transaction description</td>
+<td><em>Optional</em> The transaction description</td>
 </tr>
 <tr>
 <td><code>original_description</code></td>
@@ -652,9 +653,9 @@ Negative purchases (refunds) will return negative numbers for environmental impa
 <td>The user&#39;s diet. Can be one of: <br><code>&quot;typical&quot;</code><br><code>&quot;vegetarian&quot;</code><br><code>&quot;vegan&quot;</code></td>
 </tr>
 <tr>
-<td><code>VRE</code></td>
+<td><code>renewable_energy</code></td>
 <td><code>0</code></td>
-<td>The fraction of the user&#39;s eletricity that is green</td>
+<td>The fraction of the user&#39;s eletricity that is renewable</td>
 </tr>
 <tr>
 <td><code>natural_gas</code></td>
@@ -695,7 +696,7 @@ Negative purchases (refunds) will return negative numbers for environmental impa
 <tr>
 <td><code>CO2e</code></td>
 <td><code>true</code></td>
-<td>Whether to return user CO2 footprint in response</td>
+<td>Whether to return CO2e emissions in response</td>
 </tr>
 <tr>
 <td><code>land</code></td>
@@ -710,12 +711,17 @@ Negative purchases (refunds) will return negative numbers for environmental impa
 <tr>
 <td><code>category_type</code></td>
 <td><code>&quot;category&quot;</code></td>
-<td>Whether to use a category or mcc code to categorize the transaction. Can be one of: <br><code>&quot;category&quot;</code><br><code>&quot;mcc&quot;</code></td>
+<td>Whether to use a category or Merchant Category Code (MCC) to categorize the transaction. Can be one of: <br><code>&quot;category&quot;</code><br><code>&quot;mcc&quot;</code></td>
 </tr>
 <tr>
 <td><code>country</code></td>
 <td><code>&quot;United States&quot;</code></td>
 <td>Country used to determine economic and environmental data. Usually set to user&#39;s permanent residence.</td>
+</tr>
+<tr>
+<td><code>aggregate</code></td>
+<td><code>false</code></td>
+<td>Whether to return an aggregated (by category or Merchant Category Code (MCC)) footprint or by footprints by transaction.</td>
 </tr>
 </tbody></table>
 
