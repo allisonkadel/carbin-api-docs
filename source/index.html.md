@@ -164,7 +164,8 @@ Parameter | Type | Description
 		"renewable_energy": 0,
 		"natural_gas": false,
 		"shared_account": false, 
-        "zip_code": 19130
+        "zip_code": 19130, 
+		"fuel_grade": "regular"
 	},
 	"options": {
 		"offsets": false,
@@ -238,6 +239,7 @@ Parameter | Type | Description
 
 `POST https://api.carboninsights.co/calculateCarbonScore`
 
+
 ### Query Parameters for `transactions`
 **Required**
 
@@ -253,6 +255,7 @@ Parameter | Type | Description
 Negative purchases (refunds) will return negative numbers for environmental impacts.
 </aside>
 
+
 ### Query Parameters for `user_profile`
 _Optional_
 
@@ -263,6 +266,8 @@ Parameter | Default | Description
 `natural_gas` |  `false` | Whether the user uses natural gas for heating and cooking
 `shared_account` |  `false` | Whether the user shares the account with at least one other person
 `zip_code` |  `00000` | The user's zip code
+`fuel_grade` | `"regular"` | The user's car's fuel grade. Can be one of: <br>`"regular"`<br>`"mid_grade"`<br>`"premium"`<br>`"diesel"`
+
 
 ### Query Parameters for `options`
 _Optional_
