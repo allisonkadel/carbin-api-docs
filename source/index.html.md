@@ -159,45 +159,47 @@ Parameter | Type | Description
 
 ```json
 {
-	"user_profile": {
-		"diet": "vegetarian",
-		"VRE": 0,
-		"natural_gas": false,
-		"shared_account": false, 
-        "zip_code": 19130
-	},
-	"options": {
-		"offsets": false,
-		"recommendations": true,
-		"CO2e": true,
-		"land": false,
-		"water": false,
+    "user_profile": {
+        "diet": "typical",
+        "renewable_energy": 0,
+        "natural_gas": true,
+        "shared_account": false,
+        "zip_code": 19130,
+        "fuel_grade": "regular"
+    },
+    "options": {
+        "offsets": false,
+        "recommendations": true,
+        "CO2e": true,
+        "land": false,
+        "water": false,
         "category_type": "category",
-        "country": "United States"
-	},
-	"transactions": [
-		{
-			"date": "2020-03-01",
-			"amount": 248.76,
-			"category": "Air Travel", 
+        "country": "United States",
+        "aggregate": true
+    },
+    "transactions": [
+        {
+            "date": "01-03-2020",
+            "amount": 248.76,
+            "category": "Air Travel", 
             "description": "Delta",
             "original_description": "Delta 866-576-1039 GA"
-		},
-				{
-			"date": "2020-03-03",
-			"amount": 73.88,
-			"category": "Hotel", 
+        },
+                {
+            "date": "2020-03-03",
+            "amount": 73.88,
+            "category": "Hotel", 
             "description": "Hilton",
             "original_description": "Hilton - WESTHEIM HOUSTON"
-		},
-				{
-			"date": "2020-03-03",
-			"amount": 11.23,
-			"category": "Rental Car & Taxi", 
+        },
+                {
+            "date": "2020-03-03",
+            "amount": 11.23,
+            "category": "Rental Car & Taxi", 
             "description": "Lyft",
             "original_description": "LYFT *RIDE SUN 12AM 855-865-9553 CA"
-		}
-	]
+        }
+    ]
 }
 ```
 
@@ -214,9 +216,9 @@ Parameter | Type | Description
                 "2": "Rental Car & Taxi"
             },
             "CO2e Emissions [tonne]": {
-                "0": 0.22999763029727627,
-                "1": 0.02183167856093383,
-                "2": 0.04184753435490269
+                "0": 0.23864127230148421,
+                "1": 0.021415030569301514,
+                "2": 0.04303300299010413
             }
         },
         "recommendations": {
@@ -225,8 +227,8 @@ Parameter | Type | Description
                 "1": "Driving 10% less"
             },
             "CO2e Emissions [tonne]": {
-                "0": 0.22999763029727627,
-                "1": 0.004184753435490269
+                "0": 0.23864127230148421,
+                "1": 0.004303300299010413
             }
         }
     }
@@ -262,6 +264,11 @@ Parameter | Default | Description
 `natural_gas` |  `false` | Whether the user uses natural gas for heating and cooking
 `shared_account` |  `false` | Whether the user shares the account with at least one other person
 `zip_code` |  `00000` | The user's zip code
+`fuel_grade` | `"regular"` | The user's car's fuel grade. Can be one of: <br>`"regular"`<br>`"mid_grade"`<br>`"premium"`<br>`"diesel"`
+
+<aside class="notice">
+The default `zip_code` value indicates average US data will be used.
+</aside>
 
 ### Query Parameters for `options`
 _Optional_
