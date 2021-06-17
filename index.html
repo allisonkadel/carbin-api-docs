@@ -681,7 +681,7 @@ Negative purchases (refunds) will return negative numbers for environmental impa
 </tbody></table>
 
 <aside class="notice">
-The default `zip_code` value indicates average US data will be used.
+The default <code>zip_code</code> value indicates average US data will be used.
 </aside>
 <h3 id='query-parameters-for-options'>Query Parameters for <code>options</code></h3>
 <p><em>Optional</em></p>
@@ -809,6 +809,10 @@ One of these categories can be used if the transaction does not fit into the abo
 <td>503</td>
 <td>Service Unavailable -- We&#39;re temporarily offline for maintenance. Please try again later.</td>
 </tr>
+<tr>
+<td>429</td>
+<td>Too Many Requests -- You&#39;ve exceeded the request limit for your account.</td>
+</tr>
 </tbody></table>
 
 <!-- 403 | Forbidden -- The kitten requested is hidden for administrators only. -->
@@ -820,8 +824,6 @@ One of these categories can be used if the transaction does not fit into the abo
 <!-- 410 | Gone -- The kitten requested has been removed from our servers. -->
 
 <!-- 418 | I'm a teapot. -->
-
-<!-- 429 | Too Many Requests -- You're requesting too many kittens! Slow down! -->
 
       </div>
       <div class="dark-box">
