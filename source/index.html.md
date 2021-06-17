@@ -267,7 +267,7 @@ Parameter | Default | Description
 `fuel_grade` | `"regular"` | The user's car's fuel grade. Can be one of: <br>`"regular"`<br>`"mid_grade"`<br>`"premium"`<br>`"diesel"`
 
 <aside class="notice">
-The default `zip_code` value indicates average US data will be used.
+The default <code>zip_code</code> value indicates average US data will be used.
 </aside>
 
 ### Query Parameters for `options`
