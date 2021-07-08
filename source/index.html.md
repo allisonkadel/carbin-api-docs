@@ -281,7 +281,7 @@ Parameter | Default | Description
 `land`      | `false` | Whether to return land use in response
 `water`      | `false` | Whether to return water use in response
 `category_type` | `"category"` | Whether to use a category or Merchant Category Code (MCC) to categorize the transaction. Can be one of: <br>`"category"`<br>`"mcc"`
-`country` | `"United States"` | Country used to determine economic and environmental data. Usually set to user's permanent residence.
+`country` | `"United States"` | Country used to determine economic and environmental data. We currently only provide full support for the United States.
 `aggregate` | `false` | Whether to return an aggregated (by category or Merchant Category Code (MCC)) footprint or by footprints by transaction.
 
 
