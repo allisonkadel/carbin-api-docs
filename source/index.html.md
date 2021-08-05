@@ -51,7 +51,7 @@ Your `access token` is a short-lived token that is sent in the header of every r
 You must replace <code>YOUR_ACCESS_TOKEN</code> with your personal access JWT you received upon registering for an account.
 </aside>
 
-Your `refresh token` is a longer-lived token that is used to [request a new access token]#(request-a-new-access-token) when your access token expires.
+Your `refresh token` is a longer-lived token that is used to [request a new access token](#request-a-new-access-token) when your access token expires.
 
 When your refresh token expires, you will use your account credentials to reauthenticate and [request a new set of tokens](#request-authorization-tokens).
 
